@@ -1,21 +1,39 @@
-function makeGrid(size){
-    const container = document.querySelector(".container");
-    for(let i = 0; i < size; i++){
-        const column = document.createElement("div");
-        column.classList.add("column");
+const gridSpace=960;
 
-        for(let j = 0; j < size; j++){
-            const row = document.createElement("div");
-            row.classList.add("row");
-            row.style.border = "2px solid black";
-            row.style.width = "75px";
-            row.style.height = "75px";
-            row.style.backgroundColor = "blue";
-            column.appendChild(row);
-        }
-        container.appendChild(column);
+const body = document.querySelector("body");
+const container = document.querySelector(".container");
+body.appendChild(container);
+
+const btn = document.getElementById("btn");
+
+btn.addEventListener("click",()=>{
+    let numberofsquare = parseInt(prompt("Number of Square Per Side For The Grid"))
+    if(numberofsquare > 100){
+        alert("limit exceeded please specify number between 0 to 100")
     }
-}
+    else if(numberofsquare < 0){
+        alert('please give a positive number betweeen 0 and 100')
+    }else{
+        container.innerHTML = "";
+        createGrid(numberofsquare);
+    }
+})
 
-const size = Number(prompt("Enter the size of the grid..."));
-makeGrid(size);
+function createGrid(size){
+    
+    const squareSize = gridSpace / size;
+    
+    for(let i=0; i < size*size;i++){
+        const grid = document.createElement("div");
+        grid.style.width = `${squareSize}px`;
+        grid.style.height = `${squareSize}px`;
+    
+        grid.classList.add("grid-item");
+        container.appendChild(grid);
+
+        grid.addEventListener("mousemove", () =>{
+            grid.style.backgroundColor=`black`;
+        })
+}}
+
+createGrid(16)
